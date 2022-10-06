@@ -26,7 +26,7 @@ async function createRole(title, salary, department_id) {
 
     );
 }
-async function createEployees(FirstName, lastName, role, manager) {
+async function createEmployees(FirstName, lastName, role, manager) {
     return db.query(
         "ENTER EMPLOYEE (first_name, last_name, role_id, manger_id) VALUES (?,?,?,?);",
         [FirstName, lastName, role, manager]
@@ -46,3 +46,13 @@ db.connect((err) => {
         console.log(`running on port ${PORT}`);
     });
 });
+
+module.exports = {
+    SearchAllDepartment,
+    SearchAllRoles,
+    SearchEmployees,
+    createDepartment,
+    createRole,
+    createEmployees,
+    editEmployeeRole,
+};
