@@ -116,7 +116,7 @@ async function createDepartment() {
 
     SearchAllDepartment();
 }
-function createEmployee () {
+ async function createEmployee () {
     prompt([
         {
             name:"first_name",
@@ -174,12 +174,19 @@ const [createRolesection] = await createRole(
         const [employeesection] =await SearchEmployees();
         const employeeSelection = employeesection.map ((employee) => ({
          name : `${employee.first_name} ${employee.last_name}`,
-         value: role.id,
+         value: employee.id,
         }));
+
+        const [roleSection] = await SearchAllRoles();
+            const roleChoices = roleSection.map((role) => ({
+                name: role.title,
+                value: role.id,
+            
+    }));
         const {firstName, lastName, roleSelected, employeeSelected} = await prompt([
             {
                 type: " input",
-                name: " firstName",
+                name: "firstName",
                 message: "Employee first name?",
             },
             {
@@ -189,9 +196,24 @@ const [createRolesection] = await createRole(
             },
             {
                 type:"list",
-                name: "ro"
+                name: "roleSelected",
+                message: "Employee job title?",
+                choices: roleSelected,
 
-            }
-        ])
+            },
+            {
+                type:"list",
+                name:"employeeChoice",
+                message: "Manager of the employee?",
+                choices: employeeSelected,
+            },
+        ]);
     }
-    
+     createEmployee(firstName, lastName , roleSelected, employeeSelected);
+     console.log("employee added.\n");
+     SearchEmployees();
+ function stop() {
+    console.log("All Done!");
+    process.exit();
+ }
+ mainMenu();
