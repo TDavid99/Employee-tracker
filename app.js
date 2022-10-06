@@ -142,7 +142,56 @@ async function ADD_A_ROLE(){
 }
 const response = await prompt([
     {
-        type: ""
+        type: "input",
+        name: "title",
+        message: "What is the name of your employee role?",
+    },
+    {
+        type: "input",
+        name: "Salary",
+        message: "What is the salary for this employee role?",
+    },
+    {
+        type: "list",
+        name: "choice",
+        message: "What department does this employee belong?",
+        choices,
+    },
+]);
+}
+const salaryInt = parseInt(response.salary);
+
+const [createRolesection] = await createRole(
+    response.title,
+    salaryInt,
+    response.choice
+    );
+    console.log("Role add./n");
+    
+    SearchAllRoles();
+
+    async function ADD_A_EMPLOYEE() {
+        const [employeesection] =await SearchEmployees();
+        const employeeSelection = employeesection.map ((employee) => ({
+         name : `${employee.first_name} ${employee.last_name}`,
+         value: role.id,
+        }));
+        const {firstName, lastName, roleSelected, employeeSelected} = await prompt([
+            {
+                type: " input",
+                name: " firstName",
+                message: "Employee first name?",
+            },
+            {
+                type: "input",
+                name: "lastName",
+                message: "Employee last name?",
+            },
+            {
+                type:"list",
+                name: "ro"
+
+            }
+        ])
     }
-])
     
