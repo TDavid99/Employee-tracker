@@ -77,12 +77,29 @@ async function mainMenu() {
 
 
 async function SearchAllDepartment() {
-    const [rows] = await findAllEmployees();
-    const employee = rows;
+    const [rows] = await findAllDepartment();
+    const department = rows;
+    console.log ("\n");
 
-    console.table(employee);
+    console.table(department);
 
     mainMenu();
+}
+async function SearchEmployees() {
+    const [rows]=await findAllEmployees();
+    const employee =(employee);
+    console.log("\n");
+
+    console.table(employee);
+     
+    mainMenu();
+}
+
+async function SearchAllRoles() {
+    const [rows] = await findAllRoles();
+    const role = (role);
+    console.log("\n");
+    console.table(employee);
 }
 
 async function createDepartment() {
@@ -90,9 +107,42 @@ async function createDepartment() {
         {
             type:"input",
             name:"department",
-            message:"Deapartment name of your choice.",
+            message:"what's is the Departments name of your choice.",
         },
     ]);
 
+    const createDepartmentRows = await createDepartment(response.department);
+    console.log("Department added.\n");
 
+    SearchAllDepartment();
 }
+function createEmployee () {
+    prompt([
+        {
+            name:"first_name",
+            message: "first name of employee?"
+        },
+        {
+            name:"last_name",
+            message:"last name of employee?"
+        }
+    ])
+.then(res => {
+    let first_name = res.first_name;
+    let last_name = res.last_name;
+}),
+
+async function ADD_A_ROLE(){
+    const [departmentRows] = await SearchAllDepartment();
+    
+    const choices = departmentRows.map((department) =>({
+        name: department.name,
+        value: department.id,
+    }));
+}
+const response = await prompt([
+    {
+        type: ""
+    }
+])
+    
