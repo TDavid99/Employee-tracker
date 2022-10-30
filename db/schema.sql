@@ -19,4 +19,15 @@ CREATE TABLE role (
     salary INTEGER,
     department_id INTEGER,
     CONSTRAINT fk_department FOREIGN KEY (department)
-)
+);
+
+
+CREATE TABLE employee (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(70) NOT NULL,
+    Last_name VARCHAR(70) NOT NULL,
+    role_id INTEGER,
+    manager_id INTEGER,
+    CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES role(id),
+    CONSTRAINT Fk_employee FOREIGN KEY (manager_id) REFERENCES employee(id)
+);
