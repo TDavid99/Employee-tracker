@@ -18,7 +18,7 @@ CREATE TABLE role (
     title VARCHAR(70) NOT NULL,
     salary INTEGER,
     department_id INTEGER,
-    CONSTRAINT fk_department FOREIGN KEY (department)
+    CONSTRAINT fk_department FOREIGN KEY (department) REFERENCES department(id)
 );
 
 

@@ -202,14 +202,36 @@ async function createEmployee() {
 async function editEmployeeRole() {
     const [employeeRows] = await findAllEmployees();
     const employeeChoices = employeeRows.map((employee) => ({
-        name: `${empl}`
-    })
-}
-editEmployeeRole(firstName, lastName, roleSelected, employeeSelected);
+        name: `${employee.first_name} ${employee.last_name}`,
+        vaule: employee.id,
+    }));
+    
+    const [roleRows] = await findAllRoles();
+    const roleChoices = roleRows.map((role) => ({
+     name: role.title,
+     vaule: role.id,
+    }));
 
-console.log("employee added.\n");
+const {employeeChoice, roleChoice } = await prompt([
+    {
+        type: "list",
+        name: "employeeChoice",
+        message: "what is name of the employee you would like yo update status?",
+        choices: employeeChoices,
+    },
+    {
+        type: "list",
+        name: "roleChoice",
+        message: "What is the new role for this employee",
+        choices: roleChoices,
+    },
+]);
+editEmployeeRole( roleChoice, employeeChoice);
+
+console.log("Employee role added.\n");
 SearchAllEmployees();
 
+}
 function quit() {
     console.log("All Done!");
     process.exit();
