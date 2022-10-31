@@ -9,7 +9,7 @@ async function SearchAllRoles() {
         "SELECT role.id, role.title, role.salary, department.name, role.department_id FROM role LEFT JOIN department ON employee.role_id = department.id,"
     )
 };
-async function SearchEmployees() {
+async function SearchAllEmployees() {
     return db.query(
         "SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manger_id FROM employee LEFT JOIN role ON employee.role_id = role.id;"
     );
@@ -50,7 +50,7 @@ db.connect((err) => {
 module.exports = {
     SearchAllDepartment,
     SearchAllRoles,
-    SearchEmployees,
+    SearchAllEmployees,
     createDepartment,
     createRole,
     createEmployees,

@@ -2,14 +2,14 @@ const { prompt } = require("inquirer");
 const {
     SearchAllDepartment,
     SearchAllRoles,
-    SearchEmployees,
+    SearchAllEmployees,
     createRole,
-    createEmployee,
+    createEmployees,
     createDepartment,
     editEmployeeRole,
 } = require("./index");
 const cTable = require("console.table");
-const { response } = require("express");
+
 
 async function mainMenu() {
     const response = await prompt({
@@ -19,201 +19,199 @@ async function mainMenu() {
         choices: [
             {
                 name: "Search all departments",
-                value: "VIEW_DEPARTMENTS",
+                value: "Search_DEPARTMENTS",
             },
-          {
-               name: "Search all employees",
-               value: "VIEW_EMPLOYEES",
-          },
-          {
-               name: "Search all roles",
-               value: "VIEW_ROLEs",
-          },
-          {
-             name: "Add a role",
-             value: "ADD_A_ROLE",
-          },
-          {
-              name:"Add a department",
-              value:" ADD_A_DEPARTMENT",
+            {
+                name: "Search all employees",
+                value: "search_EMPLOYEES",
+            },
+            {
+                name: "Search all roles",
+                value: "Search_ROLES",
+            },
+            {
+                name: "create a role",
+                value: "create_A_ROLE",
+            },
+            {
+                name: "create a department",
+                value: " Create_A_DEPARTMENT",
 
-          },
-          {
-              name:"Add an employee",
-              Value:"ADD_A_EMPLOYEE",
-          
-          
-            name: "upadate an employee role",
-            value: "UPDATE_AN_EMPLOYEE_ROLE",
-          },
-          {
-            name:"STOP",
-            VALUE:"STOP",
-          },
-        ],     
-          z                                                                                                         
-        });
-    }
-    const choice =response.choice;
-    
-    switch(choice) {
-        case "VIEW_DEPARTMENTS":
-            return SearchAllDepartment();
-        case "VIEW_ROLES":
+            },
+            {
+                name: "Create an employee",
+                Value: "Create_A_EMPLOYEE",
+
+
+                name: "upadate an employee role",
+                value: "UPDATE_AN_EMPLOYEE_ROLE",
+            },
+            {
+                name: "STOP",
+                VALUE: "EXIT",
+            },
+        ],
+    });
+
+    const choice = response.choice;
+
+    switch (choice) {
+        case "Search_DEPARTMENTS":
+            return SearchAllDepartments();
+        case "Search_ROLES":
             return SearchAllRoles();
-        case "VIEW_EMPLOYEES":
-            return SearchEmployees();
-        case "ADD_A_DEPARTMENT":
+        case "Search_EMPLOYEES":
+            return SearchAllEmployees();
+        case "Search_A_DEPARTMENT":
             return createDepartment();
-        case "ADD_A_ROLE":
+        case "Create_A_ROLE":
             return createRole();
-        case "ADD_A_EMPLOYEE":
+        case "Create_A_EMPLOYEE":
             return createEmployee();
         case "UPDATE_AN_EMPLOYEE_ROLE":
             return editEmployeeRole();
-            case "STOP":
-              return stop();
+        case "EXIT":
+            return quit();
     }
 
-
-async function SearchAllDepartment() {
+}
+async function SearchAllDepartments() {
     const [rows] = await findAllDepartment();
-    const department = rows;
-    console.log ("\n");
+    const departments = rows;
 
-    console.table(department);
+
+    console.table(departments);
 
     mainMenu();
 }
-async function SearchEmployees() {
-    const [rows]=await findAllEmployees();
-    const employee =(employee);
-    console.log("\n");
+async function SearchAllEmployees() {
+    const [rows] = await findAllEmployees();
+    const employees = rows;
 
-    console.table(employee);
-     
+    console.table(employees);
+
     mainMenu();
 }
 
 async function SearchAllRoles() {
     const [rows] = await findAllRoles();
-    const role = (role);
-    console.log("\n");
-    console.table(employee);
+    const role = (rows);
+
+    console.table(rows);
+    mainMenu();
 }
 
 async function createDepartment() {
     const response = await prompt([
         {
-            type:"input",
-            name:"department",
-            message:"what's is the Departments name of your choice.",
+            type: "input",
+            name: "department",
+            message: "what's is the Departments name of your choice.",
         },
     ]);
 
     const createDepartmentRows = await createDepartment(response.department);
+
     console.log("Department added.\n");
 
-    SearchAllDepartment();
+    SearchAllDepartments();
 }
- async function createEmployee () {
-    prompt([
-        {
-            name:"first_name",
-            message: "first name of employee?"
-        },
-        {
-            name:"last_name",
-            message:"last name of employee?"
-        }
-    ])
-.then(res => {
-    let first_name = res.first_name;
-    let last_name = res.last_name;
-}),
 
-async function ADD_A_ROLE(){
+async function createRole() {
     const [departmentRows] = await SearchAllDepartment();
-    
-    const choices = departmentRows.map((department) =>({
+
+    const choices = departmentRows.map((department) => ({
         name: department.name,
         value: department.id,
     }));
-}
-const response = await prompt([
-    {
-        type: "input",
-        name: "title",
-        message: "What is the name of your employee role?",
-    },
-    {
-        type: "input",
-        name: "Salary",
-        message: "What is the salary for this employee role?",
-    },
-    {
-        type: "list",
-        name: "choice",
-        message: "What department does this employee belong?",
-        choices,
-    },
-]);
-}
-const salaryInt = parseInt(response.salary);
 
-const [createRolesection] = await createRole(
-    response.title,
-    salaryInt,
-    response.choice
+    const response = await prompt([
+        {
+            type: "input",
+            name: "title",
+            message: "What is the name of your employee role?",
+        },
+        {
+            type: "input",
+            name: "Salary",
+            message: "What is the salary for this employee role?",
+        },
+        {
+            type: "list",
+            name: "choice",
+            message: "What department does this employee belong?",
+            choices,
+        },
+    ]);
+
+    const salaryInt = parseInt(response.salary);
+
+    const [createRoleRows] = await createRole(
+        response.title,
+        salaryInt,
+        response.choice
     );
     console.log("Role add./n");
-    
+
     SearchAllRoles();
+}
+async function createEmployee() {
+    const [employeeRows] = await SearchAllEmployees();
 
-    async function ADD_A_EMPLOYEE() {
-        const [employeesection] =await SearchEmployees();
-        const employeeSelection = employeesection.map ((employee) => ({
-         name : `${employee.first_name} ${employee.last_name}`,
-         value: employee.id,
-        }));
-
-        const [roleSection] = await SearchAllRoles();
-            const roleChoices = roleSection.map((role) => ({
-                name: role.title,
-                value: role.id,
-            
+    const employeeSelection = employeeRows.map((employee) => ({
+        name: `${employee.first_name} ${employee.last_name}`,
+        value: employee.id,
     }));
-        const {firstName, lastName, roleSelected, employeeSelected} = await prompt([
-            {
-                type: " input",
-                name: "firstName",
-                message: "Employee first name?",
-            },
-            {
-                type: "input",
-                name: "lastName",
-                message: "Employee last name?",
-            },
-            {
-                type:"list",
-                name: "roleSelected",
-                message: "Employee job title?",
-                choices: roleSelected,
 
-            },
-            {
-                type:"list",
-                name:"employeeChoice",
-                message: "Manager of the employee?",
-                choices: employeeSelected,
-            },
-        ]);
-    }
-     createEmployee(firstName, lastName , roleSelected, employeeSelected);
-     console.log("employee added.\n");
-     SearchEmployees();
- function stop() {
+    const [roleRows] = await SearchAllRoles();
+
+    const roleChoices = roleRows.map((role) => ({
+        name: role.title,
+        value: role.id,
+
+    }));
+    const { firstName, lastName, roleChoice, employeeChoice } = await prompt([
+        {
+            type: "input",
+            name: "firstName",
+            message: "What is your Employee first name?",
+        },
+        {
+            type: "input",
+            name: "lastName",
+            message: "What is your Employee last name?",
+        },
+        {
+            type: "list",
+            name: "roleSelected",
+            message: "What is your Employee job title?",
+            choices: roleChoices,
+
+        },
+        {
+            type: "list",
+            name: "employeeChoice",
+            message: "Who is the Manager of the employee?",
+            choices: employeeChoices,
+        },
+    ]);
+    createEmployee(firstName, lastName, roleChoice, employeeChoice);
+    console.log("Employee added.\n");
+    SearchAllEmployees();
+}
+async function editEmployeeRole() {
+    const [employeeRows] = await findAllEmployees();
+    const employeeChoices = employeeRows.map((employee) => ({
+        name: `${empl}`
+    })
+}
+editEmployeeRole(firstName, lastName, roleSelected, employeeSelected);
+
+console.log("employee added.\n");
+SearchAllEmployees();
+
+function quit() {
     console.log("All Done!");
     process.exit();
- }
- mainMenu();
+}
+mainMenu();
