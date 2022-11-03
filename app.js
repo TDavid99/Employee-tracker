@@ -10,6 +10,7 @@ const {
 } = require("./db/index");
 const cTable = require("console.table");
 const { SELECT } = require("sequelize/types/query-types");
+const { response } = require("express");
 
 async function mainMenu() {
     console.log("");
@@ -52,10 +53,10 @@ async function mainMenu() {
     ],
   }])
   
-  .then ((data) => {
+//   .then ((data) => {
     // });
   
-  const choice = data.choice;
+  const choice = response.choice;
 
   switch (choice) {
     case "Search_DEPARTMENTS":
@@ -75,7 +76,7 @@ async function mainMenu() {
     case "EXIT":
       return quit();
   }
-})
+}
 
 
 
@@ -240,4 +241,4 @@ async function startProgram() {
   await mainMenu();
 }
 
-mainMenu()
+startProgram();
