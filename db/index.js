@@ -1,15 +1,15 @@
 const { application } = require("express");
-const db = require("./");
+const db = require("./connect");
 
 async function SearchAllDepartment() {
     return db.query("SELECT * FROM department;");
 }
-async function SearchAllRoles() {
+async function findAllRoles() {
     return db.query(
         "SELECT role.id, role.title, role.salary, department.name, role.department_id FROM role LEFT JOIN department ON employee.role_id = department.id,"
     )
 };
-async function SearchAllEmployees() {
+async function findAllEmployees() {
     return db.query(
         "SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manger_id FROM employee LEFT JOIN role ON employee.role_id = role.id;"
     );
@@ -49,8 +49,8 @@ db.connect((err) => {
 
 module.exports = {
     SearchAllDepartment,
-    SearchAllRoles,
-    SearchAllEmployees,
+    findAllRoles,
+    findAllEmployees,
     createDepartment,
     createRole,
     createEmployees,
