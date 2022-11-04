@@ -9,12 +9,12 @@ const {
   editEmployeeRole,
 } = require("./db/index");
 const cTable = require("console.table");
-const { SELECT } = require("sequelize/types/query-types");
-const { response } = require("express");
+// const { } = require("sequelize/types/query-types");
+// const { response } = require("express");
 
 async function mainMenu() {
-    console.log("");
-  const data= await prompt([{
+    // console.log("");
+  const response= await prompt({
     type: "list",
     name: "choice",
     message: "what would you like to do?",
@@ -43,7 +43,7 @@ async function mainMenu() {
         name: "Create an employee",
         Value: "Create_A_EMPLOYEE",
 
-        name: "upadate an employee role",
+        name: "update an employee role",
         value: "UPDATE_AN_EMPLOYEE_ROLE",
       },
       {
@@ -51,7 +51,7 @@ async function mainMenu() {
         value: "EXIT",
       },
     ],
-  }])
+  });
   
 //   .then ((data) => {
     // });

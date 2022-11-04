@@ -1,5 +1,5 @@
-const { application } = require("express");
-const db = require("./connect");
+// const { application } = require("express");
+const db = require("./connect.js");
 
 async function SearchAllDepartment() {
     return db.query("SELECT * FROM department;");
