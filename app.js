@@ -1,8 +1,8 @@
 const { prompt } = require("inquirer");
 const {
-  SearchAllDepartment,
-  findAllRoles,
-  findAllEmployees,
+  SearchAllDepartments,
+  SearchAllRoles,
+  SearchAllEmployees,
   createRole,
   createEmployees,
   createDepartment,
@@ -60,17 +60,17 @@ async function mainMenu() {
 
   switch (choice) {
     case "Search_DEPARTMENTS":
-      return SearchAllDepartments();
+      return FindAllDepartments();
     case "Search_ROLES":
-      return SearchAllRoles();
+      return FindAllRoles();
     case "Search_EMPLOYEES":
-      return SearchAllEmployees();
+      return FindAllEmployees();
     case "Search_A_DEPARTMENT":
       return createNewDepartment();
     case "Create_A_ROLE":
-      return createNewRole();
+      return addRole();
     case "Create_A_EMPLOYEE":
-      return createEmployee();
+      return addEmployee();
     case "UPDATE_AN_EMPLOYEE_ROLE":
       return updateEmployeeRole();
     case "EXIT":
@@ -80,16 +80,16 @@ async function mainMenu() {
 
 
 
-async function SearchAllDepartments() {
-  const [rows] = await findAllDepartment();
+async function FindAllDepartment() {
+  const [rows] = await FindAllDepartments();
   const departments = rows;
 
   console.table(departments);
 
   mainMenu();
 }
-async function SearchAllEmployees() {
-  const [rows] = await findAllEmployees();
+async function FindAllEmployees() {
+  const [rows] = await FindAllEmployees();
   const employees = rows;
 
   console.table(employees);
@@ -97,9 +97,9 @@ async function SearchAllEmployees() {
   mainMenu();
 }
 
-async function SearchAllRoles() {
-  const [rows] = await findAllRoles();
-  const role = rows;
+async function FindAllRoles() {
+  const [rows] = await FindAllRoles();
+  const roles = rows;
 
   console.table(rows);
   mainMenu();
@@ -118,10 +118,10 @@ async function createNewDepartment() {
 
   console.log("Department added.\n");
 
-  SearchAllDepartments();
+  FindAllDepartments();
 }
 
-async function createNewRole() {
+async function addRole() {
   const [departmentRows] = await SearchAllDepartment();
 
   const choices = departmentRows.map((department) => ({

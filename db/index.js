@@ -1,7 +1,7 @@
 // const { application } = require("express");
 const db = require("./connect.js");
 
-async function SearchAllDepartment() {
+async function FindAllDepartments() {
     return db.query("SELECT * FROM department;");
 }
 async function findAllRoles() {
@@ -39,16 +39,9 @@ async function editEmployeeRole(role_id, employee_id) {
         employee_id,
     ]);
 }
-// db.connect((err) => {
-//     if (err) throw err;
-//     console.log("database online.");
-//     application.listen(PORT, () => {
-//         console.log(`running on port ${PORT}`);
-//     });
-// });
 
 module.exports = {
-    SearchAllDepartment,
+    FindAllDepartments,
     findAllRoles,
     findAllEmployees,
     createDepartment,
