@@ -7,7 +7,7 @@ const {
   createEmployees,
   createDepartment,
   editEmployeeRole,
-} = require("./db/index");
+} = require("./db/index.js");
 const cTable = require("console.table");
 // const { } = require("sequelize/types/query-types");
 // const { response } = require("express");

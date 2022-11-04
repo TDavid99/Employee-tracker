@@ -39,13 +39,13 @@ async function editEmployeeRole(role_id, employee_id) {
         employee_id,
     ]);
 }
-db.connect((err) => {
-    if (err) throw err;
-    console.log("database online.");
-    application.listen(PORT, () => {
-        console.log(`running on port ${PORT}`);
-    });
-});
+// db.connect((err) => {
+//     if (err) throw err;
+//     console.log("database online.");
+//     application.listen(PORT, () => {
+//         console.log(`running on port ${PORT}`);
+//     });
+// });
 
 module.exports = {
     SearchAllDepartment,
