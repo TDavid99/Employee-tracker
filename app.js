@@ -80,8 +80,8 @@ async function mainMenu() {
 
 
 
-async function FindAllDepartment() {
-  const [rows] = await FindAllDepartments();
+async function FindAllDepartments() {
+  const [rows] = await SearchAllDepartments();
   const departments = rows;
 
   console.table(departments);
@@ -89,7 +89,7 @@ async function FindAllDepartment() {
   mainMenu();
 }
 async function FindAllEmployees() {
-  const [rows] = await FindAllEmployees();
+  const [rows] = await SearchAllEmployees();
   const employees = rows;
 
   console.table(employees);
@@ -98,7 +98,7 @@ async function FindAllEmployees() {
 }
 
 async function FindAllRoles() {
-  const [rows] = await FindAllRoles();
+  const [rows] = await SearchAllRoles();
   const roles = rows;
 
   console.table(rows);
@@ -157,12 +157,12 @@ async function addRole() {
   );
   console.log("Role add./n");
 
-  SearchAllRoles();
+  FindAllRoles();
 }
-async function createEmployee() {
+async function addEmployee() {
   const [employeeRows] = await SearchAllEmployees();
 
-  const employeeSelection = employeeRows.map((employee) => ({
+  const employeeChoices = employeeRows.map((employee) => ({
     name: `${employee.first_name} ${employee.last_name}`,
     value: employee.id,
   }));
@@ -199,10 +199,10 @@ async function createEmployee() {
   ]);
   createEmployee(firstName, lastName, roleChoice, employeeChoice);
   console.log("Employee added.\n");
-  SearchAllEmployees();
+  FindAllEmployees();
 }
 async function updateEmployeeRole() {
-  const [employeeRows] = await findAllEmployees();
+  const [employeeRows] = await SearchAllEmployees();
   const employeeChoices = employeeRows.map((employee) => ({
     name: `${employee.first_name} ${employee.last_name}`,
     vaule: employee.id,
@@ -231,14 +231,13 @@ async function updateEmployeeRole() {
   editEmployeeRole(roleChoice, employeeChoice);
 
   console.log("Employee role added.\n");
-  SearchAllEmployees();
+  FindAllEmployees();
 }
 function quit() {
   console.log("All Done!");
   process.exit();
 }
-async function startProgram() {
-  await mainMenu();
-}
-
-startProgram();
+// async function startProgram() {
+//   await mainMenu();
+// }
+mainMenu();
