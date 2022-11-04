@@ -9,3 +9,7 @@ This application that allow users and employees to view and serch all department
 - node MYSQL 2
 - Inquirer
 - console.table
+https://github.com/TDavid99/Employee-tracker
+
+https://drive.google.com/file/d/1pvURqQZZ9JYUcBsDxpXgMtqHhNrtbLxn/view
+

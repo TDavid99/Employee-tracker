@@ -208,7 +208,7 @@ async function updateEmployeeRole() {
     vaule: employee.id,
   }));
 
-  const [roleRows] = await findAllRoles();
+  const [roleRows] = await SearchAllRoles();
   const roleChoices = roleRows.map((role) => ({
     name: role.title,
     vaule: role.id,
