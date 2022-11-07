@@ -1,3 +1,4 @@
+
 const { prompt } = require("inquirer");
 const {
   SearchAllDepartments,
@@ -9,6 +10,7 @@ const {
   editEmployeeRole,
 } = require("./db/index.js");
 const cTable = require("console.table");
+const db = require("./db/connect.js");
 // const { } = require("sequelize/types/query-types");
 // const { response } = require("express");
 
@@ -25,7 +27,7 @@ async function mainMenu() {
       },
       {
         name: "Search all employees",
-        value: "search_EMPLOYEES",
+        value: "Search_EMPLOYEES",
       },
       {
         name: "Search all roles",
@@ -33,11 +35,11 @@ async function mainMenu() {
       },
       {
         name: "create a role",
-        value: "create_A_ROLE",
+        value: "Create_A_ROLE",
       },
       {
         name: "create a department",
-        value: " Create_A_DEPARTMENT",
+        value: "Create_A_DEPARTMENT",
       },
       {
         name: "Create an employee",
@@ -65,7 +67,7 @@ async function mainMenu() {
       return FindAllRoles();
     case "Search_EMPLOYEES":
       return FindAllEmployees();
-    case "Search_A_DEPARTMENT":
+    case "Create_A_DEPARTMENT":
       return createNewDepartment();
     case "Create_A_ROLE":
       return addRole();
@@ -81,9 +83,10 @@ async function mainMenu() {
 
 
 async function FindAllDepartments() {
+  console.log("hello world")
   const [rows] = await SearchAllDepartments();
   const departments = rows;
-
+console.log(departments)
   console.table(departments);
 
   mainMenu();
@@ -91,7 +94,6 @@ async function FindAllDepartments() {
 async function FindAllEmployees() {
   const [rows] = await SearchAllEmployees();
   const employees = rows;
-
   console.table(employees);
 
   mainMenu();
@@ -120,9 +122,9 @@ async function createNewDepartment() {
 
   FindAllDepartments();
 }
-
 async function addRole() {
-  const [departmentRows] = await SearchAllDepartment();
+
+  const [departmentRows] = await SearchAllDepartments();
 
   const choices = departmentRows.map((department) => ({
     name: department.name,
@@ -160,11 +162,13 @@ async function addRole() {
   FindAllRoles();
 }
 async function addEmployee() {
+
   const [employeeRows] = await SearchAllEmployees();
 
   const employeeChoices = employeeRows.map((employee) => ({
     name: `${employee.first_name} ${employee.last_name}`,
     value: employee.id,
+
   }));
 
   const [roleRows] = await SearchAllRoles();
@@ -237,7 +241,12 @@ function quit() {
   console.log("All Done!");
   process.exit();
 }
+db.connect(err => {
+  if (err) throw err;
+  console.log('Database connected.');
+
+  mainMenu();
+});
 // async function startProgram() {
 //   await mainMenu();
 // }
-mainMenu();
